@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import CreateGroups from "../services/GroupsCreate";
-import GroupsSelect from "../services/GroupsSelect";
-import UpdateGroups from "../services/GroupsUpdate";
-import DeleteGroups from "../services/GroupsDelete";
+import CreateGroups from "../services/Groups/GroupsCreate";
+import GroupsSelect from "../services/Groups/GroupsSelect";
+import UpdateGroups from "../services/Groups/GroupsUpdate";
+import DeleteGroups from "../services/Groups/GroupsDelete";
 
 class ControllerGroups {
 

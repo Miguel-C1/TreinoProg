@@ -1,6 +1,6 @@
-import { AppDataSource } from "../data-source";
-import { Exercise } from "../entity/Exercises";
-import { Groups } from "../entity/Groups";
+import { AppDataSource } from "../../data-source";
+import { Exercise } from "../../entity/Exercises";
+import { Groups } from "../../entity/Groups";
 import { In } from "typeorm";
 
 type data = {

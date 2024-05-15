@@ -1,5 +1,5 @@
-import { Groups } from "../entity/Groups";
-import { AppDataSource } from "../data-source";
+import { Groups } from "../../entity/Groups";
+import { AppDataSource } from "../../data-source";
 
 type data = {
     name: string;

@@ -1,29 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Treino = () => {
-  
-  // Exemplo de dados para a tabela
-  const data = [
-    { id: 1, dia: 'Segunda', nome: 'Treino de pernas' },
-    { id: 2, dia: 'Terça', nome: 'Treino de peito' },
-    { id: 3, dia: 'Quarta', nome: 'Descanso' },
-    // Adicione mais dados conforme necessário
-  ];
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('localhost:3000/training');
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   // Função para renderizar cada item da lista
-const renderItem = ({ item }: { item: { id: number, dia: string, nome: string } }) => (
+  const renderItem = ({ item }: { item: { id: number, dia: string, nome: string } }) => (
     <View style={styles.item}>
-        <Text style={styles.text}>{item.dia}</Text>
-        <Text style={styles.text}>{item.nome}</Text>
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Editar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: 'red' }]}>
-            <Text style={styles.buttonText}>Excluir</Text>
-        </TouchableOpacity>
+      <Text style={styles.text}>{item.dia}</Text>
+      <Text style={styles.text}>{item.nome}</Text>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Editar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, { backgroundColor: 'red' }]}>
+        <Text style={styles.buttonText}>Excluir</Text>
+      </TouchableOpacity>
     </View>
-);
+  );
 
   return (
     <View style={styles.container}>
@@ -75,3 +83,5 @@ const styles = StyleSheet.create({
 });
 
 export default Treino;
+
+

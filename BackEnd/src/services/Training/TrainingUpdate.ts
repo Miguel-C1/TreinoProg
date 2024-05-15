@@ -24,7 +24,7 @@ class UpdateTraining {
             }
             training.name = data.name;
             training.date = data.date;
-            training.exercise = exercises;
+            training.exercises = exercises;
             await trainingRepository.update(id, training);
             return training;
         } catch (error: any) {

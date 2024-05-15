@@ -1,20 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { Exercise } from "./Exercises";
 
 @Entity()
 export class Groups {
-
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    name: string
+    name: string;
 
-    @Column()
-    sub_group: string
+    @Column({ nullable: true })
+    sub_group: string;
 
-    @ManyToOne(() => Exercise, exercise => exercise.group)
-    @JoinTable()
+    @OneToMany(() => Exercise, exercise => exercise.group)
+    @JoinColumn()    
     exercise: Exercise[];
-
 }

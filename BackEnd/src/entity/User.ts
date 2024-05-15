@@ -16,7 +16,7 @@ export class User {
     @Column()
     age: number
 
-    @ManyToOne(() => Training, training => training.user)
+    @ManyToOne(() => Training, training => training.users)
     @JoinTable()
     training: Training[];
 

@@ -1,25 +1,21 @@
-import { Column, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Exercise } from "./Exercises"
 import { User } from "./User"
 
 
+@Entity()
 export class Training {
-
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    name: string
+    name: string;
 
     @Column()
-    date: string
+    date: string;
 
-    @ManyToMany(() => Exercise, exercise => exercise.training)
-    @JoinTable()
-    exercise: Exercise[];
-
+    @ManyToMany(() => Exercise, exercise => exercise.trainings)
+    exercises: Exercise[]; 
     @OneToMany(() => User, user => user.training)
-    @JoinTable()
-    user: User;
+    users: User[];  
 }
-    

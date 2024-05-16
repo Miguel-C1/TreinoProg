@@ -2,7 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const ExercicioCadastro = () => {
+
+interface ExercicioUpdateProps {
+  route: {
+    params: {
+      id: number;
+    };
+  };
+  navigation: any;
+  onUpdate: () => void;
+}
+
+const ExercicioUpdate: React.FC<ExercicioUpdateProps> = ({ route, navigation, onUpdate }) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState(0);
   const [grupos, setGrupos] = useState([]);
@@ -10,14 +21,15 @@ const ExercicioCadastro = () => {
   useEffect(() => {
     const fetchGrupos = async () => {
       const response = await fetch('http://localhost:3000/groups', { method: 'GET' });
+      const response2 = await fetch(`http://localhost:3000/exercise/${route.params.id}`, { method: 'GET' });
       const json = await response.json();
+      const json2 = await response2.json();
+      json2[0].name && setNome(json2[0].name);
+      json2[0].group.id && setGrupo(json2[0].group.id);
       setGrupos(json);
     };
     fetchGrupos();
-  }, []);
-
-  console.log(grupos)
-  console.log(grupo)
+  }, [route.params.id]);
 
   const handleSubmit = () => {
     const body = {
@@ -27,8 +39,8 @@ const ExercicioCadastro = () => {
     if (!nome || !grupo) {
       return;
     }
-    fetch('http://localhost:3000/exercise', {
-      method: 'POST',
+    fetch(`http://localhost:3000/exercise/${route.params.id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -36,7 +48,10 @@ const ExercicioCadastro = () => {
     })
       .then(response => response.json())
       .then(data => console.log(data))
+      .then(onUpdate)
+      .then(() => navigation.navigate('Exercicios'))
       .catch(error => console.error(error));
+    
   };
 
   return (
@@ -56,7 +71,7 @@ const ExercicioCadastro = () => {
           <Picker.Item key={g.id} label={g.name} value={g.id} />
         ))}
       </Picker>
-      <Button title="Cadastrar Exercício" onPress={handleSubmit} />
+      <Button title="Editar Exercício" onPress={handleSubmit} />
     </View>
   );
 };
@@ -77,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExercicioCadastro;
+export default ExercicioUpdate;

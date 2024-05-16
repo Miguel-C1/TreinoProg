@@ -5,8 +5,12 @@ import { useNavigation } from '@react-navigation/native'; // Importe o hook useN
 // Defina uma interface para representar a estrutura dos dados do exercício
 interface Exercise {
   id: number;
-  dia: string;
-  nome: string;
+  name: string;
+  group: {
+    id: number;
+    name: string;
+    sub_group: string;
+  };
 }
 
 const Exercicio = ({ navigation }: { navigation: any }) => {
@@ -14,11 +18,17 @@ const Exercicio = ({ navigation }: { navigation: any }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
+
+  const handleReload = () => {
+    fetchData();
+  };
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/training'); // Certifique-se de incluir o protocolo http://
+      const response = await fetch('http://localhost:3000/exercise', {
+        method: 'GET'
+      });
       const json = await response.json();
       setData(json);
     } catch (error) {
@@ -26,15 +36,33 @@ const Exercicio = ({ navigation }: { navigation: any }) => {
     }
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      await fetch(`http://localhost:3000/exercise/${id}`, {
+        method: 'DELETE'
+      });
+      // Atualizar a lista de exercícios após exclusão
+      setData(data.filter(item => item.id !== id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Função para renderizar cada item da lista
-  const renderItem = ({ item }: { item: Exercise }) => ( // Defina o tipo de item como Exercise
+  const renderItem = ({ item }: { item: Exercise }) => (
     <View style={styles.item}>
-      <Text style={styles.text}>{item.dia}</Text>
-      <Text style={styles.text}>{item.nome}</Text>
-      <TouchableOpacity style={styles.button}>
+      <Text style={styles.text}>{item.name}</Text>
+      <Text style={styles.text}>{item.group.name}</Text>
+      <TouchableOpacity style={styles.button} onPress={() => {
+        navigation.navigate('ExercicioUpdate', { id: item.id });
+        handleReload(); // Chamando a função onUpdate
+      }}>
         <Text style={styles.buttonText}>Editar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, { backgroundColor: 'red' }]}>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: 'red' }]}
+        onPress={() => handleDelete(item.id)} // Chama handleDelete passando o ID do item
+      >
         <Text style={styles.buttonText}>Excluir</Text>
       </TouchableOpacity>
     </View>
@@ -54,7 +82,7 @@ const Exercicio = ({ navigation }: { navigation: any }) => {
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
       />
-    
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Cadastro de Exercicio')} // Use navigation.navigate to navigate to the screen 'Cadastro de Exercicio'

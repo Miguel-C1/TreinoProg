@@ -5,6 +5,8 @@ import Treino from "@/app/pages/Treino/Treino";
 import Exercicio from "@/app/pages/Exercicio/Exercicio";
 import Acompanhamento from "@/app/pages/Acompanhamento";
 import ExercicioCadastro from "@/app/pages/Exercicio/ExercicioCadastro";
+import ExercicioUpdate from "@/app/pages/Exercicio/ExercicioUpdate";
+import TreinoCadastro from "@/app/pages/Treino/TreinoCadastrar";
 
 
 type RootStackParamList = {
@@ -12,8 +14,10 @@ type RootStackParamList = {
     Treino: undefined;
     Exercicios: undefined;
     Acompanhamento: undefined;
-    'Cadastro de Exercicio': undefined; // Certifique-se de que o nome da rota está igual ao definido na navegação
-  };
+    'Cadastro de Exercicio': undefined; 
+    ExercicioUpdate: { id: number }; 
+    'Cadastro de Treino': undefined; 
+};
 
 const drawer = createDrawerNavigator<RootStackParamList>();
 
@@ -24,9 +28,23 @@ const SideBar = () => {
             <drawer.Screen name="Home" component={Home} key='home' />
             <drawer.Screen name="Exercicios" component={Exercicio} key='exercicios' />
             <drawer.Screen name="Acompanhamento" component={Acompanhamento} key='acompanhamento' />
-            <drawer.Screen name="Cadastro de Exercicio" component={ExercicioCadastro} key='exercicioCadastro' />
+            <drawer.Screen name="Cadastro de Exercicio" component={ExercicioCadastro} key='exercicioCadastro'
+                options={{
+                    drawerItemStyle: { display: 'none' } // Isto oculta o item do menu no Drawer
+                }} />
+            <drawer.Screen name="Cadastro de Treino" component={TreinoCadastro} key='treinoCadastro'
+                options={{
+                    drawerItemStyle: { display: 'none' } // Isto oculta o item do menu no Drawer
+                }} />
+            <drawer.Screen
+                name="ExercicioUpdate"
+                component={ExercicioUpdate as React.ComponentType<any>}
+                key='ExercicioUpdate'
+                options={{ drawerItemStyle: { display: 'none' } }}
+            />
+
         </drawer.Navigator>
     );
 }
 
-export default  SideBar;
+export default SideBar;

@@ -54,7 +54,7 @@ const Exercicio = ({ navigation }: { navigation: any }) => {
       <Text style={styles.text}>{item.name}</Text>
       <Text style={styles.text}>{item.group.name}</Text>
       <TouchableOpacity style={styles.button} onPress={() => {
-        navigation.navigate('ExercicioUpdate', { id: item.id });
+        navigation.navigate('Alterar Exercicio', { id: item.id });
         handleReload(); // Chamando a função onUpdate
       }}>
         <Text style={styles.buttonText}>Editar</Text>
@@ -85,7 +85,11 @@ const Exercicio = ({ navigation }: { navigation: any }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Cadastro de Exercicio')} // Use navigation.navigate to navigate to the screen 'Cadastro de Exercicio'
+        onPress={() => {
+          navigation.navigate('Cadastro de Exercicio');
+          handleReload()
+        }
+        } // Use navigation.navigate to navigate to the screen 'Cadastro de Exercicio'
       >
         <Text style={styles.buttonText}>Adicionar Novo Exercício</Text>
       </TouchableOpacity>

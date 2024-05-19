@@ -4,6 +4,7 @@ import { AppDataSource } from "./data-source";
 import cors from "cors";
 import router from './routes';
 import { Groups } from './entity/Groups';
+import { User } from "./entity/User";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ AppDataSource.initialize()
 
 async function initializeGroups() {
   const groupRepo = AppDataSource.getRepository(Groups);
+  const userRepo = AppDataSource.getRepository(User);
   const count = await groupRepo.count();
   if (count === 0) {
     const muscleGroups = [
@@ -26,8 +28,10 @@ async function initializeGroups() {
       "QUADRÍCEP", "RECTO ABDOMINAL", "TRÍCEP", 
       "TRAPÉZIO", "DORSAL", "ISQUITIBIAL", "GEMEOS"
     ];
+    const user = userRepo.create({ firstName: "Admin", lastName: "Admin", age: 18 }); 
     const groups = muscleGroups.map(name => groupRepo.create({ name: name }));
     await groupRepo.save(groups);
+    await userRepo.save(user);
     console.log("Muscle groups initialized.");
   }
 }

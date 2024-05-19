@@ -23,7 +23,7 @@ const Treino = ({ navigation }: { navigation: any }) => {
 
   useEffect(() => {
     fetchData();
-  }, [data]);
+  }, []);
 
   const handleReload = () => {
     fetchData();
@@ -35,6 +35,7 @@ const Treino = ({ navigation }: { navigation: any }) => {
         method: 'GET'
       });
       const json = await response.json();
+      console.log(json);
       setData(json);
     } catch (error) {
       console.error(error);
@@ -48,6 +49,7 @@ const Treino = ({ navigation }: { navigation: any }) => {
       });
       // Atualizar a lista de exercícios após exclusão
       setData(data.filter(item => item.id !== id));
+      handleReload();
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +60,11 @@ const Treino = ({ navigation }: { navigation: any }) => {
     <View style={styles.item}>
       <Text style={styles.text}>{item.name}</Text>
       <Text style={styles.text}>{item.date}</Text>
-      <TouchableOpacity style={styles.button}>
+
+      <TouchableOpacity style={styles.button} onPress={() => {
+        navigation.navigate('Alterar Treino', { id: item.id });
+        handleReload(); // Chamando a função onUpdate
+      }}>
         <Text style={styles.buttonText}>Editar</Text>
       </TouchableOpacity>
       <TouchableOpacity

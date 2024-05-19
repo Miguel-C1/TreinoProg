@@ -8,7 +8,11 @@ class ControllerTraining {
     
         async createTraining(req: Request, res: Response) {
             try {
+                
+                console.log(req.body);
+
                 const training = await CreateTraining.create(req.body);
+                
                 res.status(201).json(training);
             } catch (error: any) {
                 res.status(400).json({ message: error.message });

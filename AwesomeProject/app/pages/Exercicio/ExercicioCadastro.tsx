@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-const ExercicioCadastro = () => {
+
+interface ExercicioCadastroProps {
+  onUpdate: () => void;
+}
+
+const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({onUpdate}) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState(0);
   const [grupos, setGrupos] = useState([]);
@@ -36,6 +41,7 @@ const ExercicioCadastro = () => {
     })
       .then(response => response.json())
       .then(data => console.log(data))
+      .then(onUpdate)
       .catch(error => console.error(error));
   };
 

@@ -5,7 +5,7 @@ class TrainingSelect {
     async selectById(id: number) {
         try {
             const trainingRepository = AppDataSource.getRepository(Training);
-            const training = await trainingRepository.findOneBy({ id: id });
+            const training = await trainingRepository.find({where: { id: id}, relations: ["exercises"]});
             if (!training) {
                 throw new Error("Training not found");
             }

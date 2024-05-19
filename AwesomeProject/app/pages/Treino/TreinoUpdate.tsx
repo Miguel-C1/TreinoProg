@@ -2,27 +2,47 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-interface TreinoCadastroProps {
+interface TreinoUpdateProps {
+    route: {
+        params: {
+          id: number;
+        };
+      };
     onUpdate: () => void;
 }
 
-
-const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
+const TreinoUpdate: React.FC<TreinoUpdateProps> = ({ route, onUpdate }) => {
     const [nomeTreino, setNomeTreino] = useState('');
     const [data, setData] = useState<string>('');
-    const [exercicios, setExercicios] = useState<number[]>([]);
+    const [exercicios, setExercicios] = useState<any>([]);
     const [listaExercicios, setListaExercicios] = useState<{ id: number; name: string, group: { name: string } }[]>([]);
     const [selectedExercicio, setSelectedExercicio] = useState<number | undefined>(undefined);
 
     useEffect(() => {
         fetchExercicios();
-    }, []);
+        fetchTreinoData();
+        console.log(route.params.id)
+    }, [route.params.id]);
 
     const fetchExercicios = async () => {
         try {
             const response = await fetch('http://localhost:3000/exercise/');
             const json = await response.json();
             setListaExercicios(json);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchTreinoData = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/training/${route.params.id}`);
+            const json = await response.json();
+            console.log(response)
+            console.log(json);
+            setNomeTreino(json[0].name);
+            setData(json[0].date);
+            setExercicios(json[0].exercises);
         } catch (error) {
             console.error(error);
         }
@@ -36,18 +56,18 @@ const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
     };
 
     const handleRemoveExercicio = (exercicioId: number) => {
-        setExercicios(exercicios.filter(ex => ex !== exercicioId));
+        setExercicios(exercicios.filter((ex: { id: number; }) => ex.id !== exercicioId));
     };
 
-    const handleSubmit = () => {
+    const handleUpdate = () => {
         const treinoData = {
             name: nomeTreino,
             exercises: exercicios,
             date: data,
             user: 1,
         };
-        fetch('http://localhost:3000/training', {
-            method: 'POST',
+        fetch(`http://localhost:3000/training/${route.params.id}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -81,7 +101,6 @@ const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={[styles.text, { fontWeight: 'bold' }]}>Nome</Text>
-                    <Text style={[styles.text, { fontWeight: 'bold' }]}>Grupo</Text>
                     <Text style={styles.text}></Text> {/* Espaço para os botões */}
                 </View>
 
@@ -89,14 +108,19 @@ const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
                     data={exercicios}
                     keyExtractor={(item) => item.toString()}
                     renderItem={({ item }) => {
-                        const exercicio = listaExercicios.find(ex => ex.id == item);
+                        console.log("Item")
+                        console.log(item)
+                        const exercicio = listaExercicios.find(ex => ex.id == item.id);
+                        console.log(listaExercicios)
+                        console.log("exercicio")
+                        console.log(exercicio)
+
                         return (
                             <View style={styles.item}>
                                 <Text style={styles.text}>{exercicio?.name} </Text>
-                                <Text style={styles.text}>{exercicio?.group?.name} </Text>
                                 <TouchableOpacity
                                     style={styles.button}
-                                    onPress={() => handleRemoveExercicio(item)}
+                                    onPress={() => handleRemoveExercicio(item.id)}
                                 >
                                     <Text style={styles.buttonText}>Excluir</Text>
                                 </TouchableOpacity>
@@ -122,7 +146,7 @@ const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
                     <Picker.Item label="Domingo" value="Domingo" />
                 </Picker>
             </View>
-            <Button title="Cadastrar Treino" onPress={handleSubmit} />
+            <Button title="Atualizar Treino" onPress={handleUpdate} />
         </View>
     );
 };
@@ -179,4 +203,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TreinoCadastro;
+export default TreinoUpdate;

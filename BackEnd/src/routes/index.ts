@@ -3,6 +3,7 @@ import { default as Group } from "./groups"
 import { default as Exercise } from "./exercise"
 import { default as Training } from "./training"
 import { default as User } from "./user"
+import { default as imageRoutes } from "./image"
 
 const router = Router();
 
@@ -10,5 +11,6 @@ router.use("/groups", Group);
 router.use("/exercise", Exercise);
 router.use("/training", Training);
 router.use("/user", User);
+router.use('/images', imageRoutes);
 
 export default router;

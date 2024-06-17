@@ -45,7 +45,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(upload.single('image')); // Adiciona o middleware Multer para a rota de upload de imagem
 
 app.use(router);
 

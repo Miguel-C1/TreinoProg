@@ -6,6 +6,7 @@ import { User } from "./entity/User";
 import { Training } from "./entity/Training";
 import { Groups } from "./entity/Groups";
 import { Exercise } from "./entity/Exercises";
+import { Acompanhamento } from "./entity/Acompanhamento";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ export const AppDataSource = new DataSource({
     database: process.env.POSTGRES_DB,
     synchronize: true, // This will create the tables if they do not exist ONLY IN DEVELOPMENT
     logging: false,
-    entities: [User, Training, Groups, Exercise],
+    entities: [User, Training, Groups, Exercise, Acompanhamento, Image],
     migrations: ["src/migration/*.ts"],
     subscribers: [],
 })

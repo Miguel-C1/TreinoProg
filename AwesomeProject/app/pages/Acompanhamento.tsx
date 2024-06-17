@@ -1,41 +1,65 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Camera, CameraCapturedPicture, CameraView, useCameraPermissions } from 'expo-camera';
-import * as MediaLibrary from 'expo-media-library';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
+import { Button, Image, View, StyleSheet, Alert } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 export default function Acompanhamento() {
-  const [facing, setFacing] = useState('back');
-  const [permission, requestPermission] = useCameraPermissions();
+  const [image, setImage] = useState('');
 
-  if (!permission) {
-    // Camera permissions are still loading.
-    return <View />;
-  }
+  useEffect(() => {
+    (async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permissão necessária', 'Precisamos da permissão para acessar a biblioteca de mídia.');
+      }
+    })();
+  }, []);
 
-  if (!permission.granted) {
-    // Camera permissions are not granted yet.
-    return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
-      </View>
-    );
-  }
+  const tirarFoto = async () => {
+    let permissao = await ImagePicker.requestCameraPermissionsAsync();
 
-  function toggleCameraFacing() {
-    setFacing(current => (current === 'back' ? 'front' : 'back'));
-  }
+    if (permissao.status !== 'granted') {
+      Alert.alert('Permissão necessária', 'Precisamos da permissão para acessar a câmera.');
+      return;
+    }
+
+    let imagem = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    if (!imagem.canceled) {
+      // Aqui você pode lidar com a imagem capturada
+     
+    }
+  };
+
+  const removeImage = async () => {
+    if (!image) {
+      return; // Nenhuma imagem selecionada para remover
+    }
+
+    try {
+      await FileSystem.deleteAsync(image, { idempotent: true });
+      setImage(''); // Limpa o estado para refletir a remoção da imagem
+    } catch (error) {
+      console.error('Erro ao excluir imagem:', error);
+      Alert.alert('Erro', 'Houve um erro ao excluir a imagem.');
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
+      <Button title="Tirar Foto" onPress={tirarFoto} />
+      {image ? (
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: image }} style={styles.image} />
+          <Button title="Remover Imagem" onPress={removeImage} />
         </View>
-      </CameraView>
+      ) : (
+        <View style={styles.placeholder}>
+        </View>
+      )}
     </View>
   );
 }
@@ -43,25 +67,19 @@ export default function Acompanhamento() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     justifyContent: 'center',
   },
-  camera: {
-    flex: 1,
+  image: {
+    width: 200,
+    height: 200,
   },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
+  imageContainer: {
+    marginBottom: 10,
   },
-  button: {
-    flex: 1,
-    alignSelf: 'flex-end',
+  placeholder: {
     alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
+    justifyContent: 'center',
+    height: 200,
   },
 });

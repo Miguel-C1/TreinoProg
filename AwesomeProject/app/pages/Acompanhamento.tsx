@@ -1,12 +1,41 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Camera, CameraCapturedPicture, CameraView, useCameraPermissions } from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Acompanhamento(gotoHome: any) {
+export default function Acompanhamento() {
+  const [facing, setFacing] = useState('back');
+  const [permission, requestPermission] = useCameraPermissions();
+
+  if (!permission) {
+    // Camera permissions are still loading.
+    return <View />;
+  }
+
+  if (!permission.granted) {
+    // Camera permissions are not granted yet.
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View>
+    );
+  }
+
+  function toggleCameraFacing() {
+    setFacing(current => (current === 'back' ? 'front' : 'back'));
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Acompanhamento</Text>
-      <View style={styles.row}>
-      </View>
+      <CameraView style={styles.camera}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
+            <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </CameraView>
     </View>
   );
 }
@@ -15,23 +44,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  camera: {
+    flex: 1,
   },
-  row: {
+  buttonContainer: {
+    flex: 1,
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    margin: 64,
   },
   button: {
-    width: '30%',
-    margin: 10,
-    padding: 20,
-    backgroundColor: '#ddd',
-    justifyContent: 'center',
+    flex: 1,
+    alignSelf: 'flex-end',
     alignItems: 'center',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
   },
 });

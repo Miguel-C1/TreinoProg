@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function Home(gotoHome: any) {
@@ -5,8 +6,6 @@ export default function Home(gotoHome: any) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Treino</Text>
-      <View style={styles.row}>
-      </View>
     </View>
   );
 }

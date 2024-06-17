@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany, ManyToOne } from "typeorm"
 import { Training } from "./Training"
+import { Image } from "./Image"
 
 @Entity()
 export class User {
@@ -15,6 +16,10 @@ export class User {
 
     @Column()
     age: number
+
+    @ManyToOne(() => Image, images => images.users)
+    @JoinTable()
+    images: Image[];
 
     @ManyToOne(() => Training, training => training.users)
     @JoinTable()

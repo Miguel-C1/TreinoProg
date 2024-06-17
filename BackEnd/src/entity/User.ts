@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany, ManyToOne } from "typeorm"
 import { Training } from "./Training"
 import { Image } from "./Image"
+import { Acompanhamento } from "./Acompanhamento"
 
 @Entity()
 export class User {
@@ -24,5 +25,9 @@ export class User {
     @ManyToOne(() => Training, training => training.users)
     @JoinTable()
     training: Training[];
+
+    @ManyToOne(() => Acompanhamento, acompanhamento => acompanhamento.users)
+    @JoinTable()
+    acompanhamento: Acompanhamento[];
 
 }

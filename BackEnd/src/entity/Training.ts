@@ -1,6 +1,7 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 import { Exercise } from "./Exercises"
 import { User } from "./User"
+import { Acompanhamento } from "./Acompanhamento";
 
 
 @Entity()
@@ -17,5 +18,9 @@ export class Training {
     @ManyToMany(() => Exercise, exercise => exercise.trainings)
     exercises: Exercise[]; 
     @OneToMany(() => User, user => user.training)
-    users: User[];  
+    users: User;  
+
+    @ManyToOne(() => Acompanhamento, acompanhamento => acompanhamento.training)
+    @JoinTable()
+    acompanhamento: Acompanhamento[];
 }

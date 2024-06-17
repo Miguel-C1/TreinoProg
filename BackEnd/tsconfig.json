@@ -27,6 +27,7 @@
    "sourceMap": true,
    "include": [
       "src/**/*",
-      "out/app.js"
+      "out/app.js",
+      "express.d.ts"
    ]
 }

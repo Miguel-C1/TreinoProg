@@ -3,6 +3,7 @@ import { Image } from "../../entity/Image";
 
 type data = {
     data: Buffer;
+    
 }
 
 class ImageCreate {

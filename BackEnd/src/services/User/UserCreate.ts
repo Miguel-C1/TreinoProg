@@ -2,6 +2,8 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entity/User";
 
 type data = {
+    login: string;
+    senha: string;
     firsName: string;
     lastName: string;
     age: number;

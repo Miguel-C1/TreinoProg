@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMan
 import { Training } from "./Training"
 import { Image } from "./Image"
 import { Acompanhamento } from "./Acompanhamento"
+import { ColumnMetadata } from "typeorm/metadata/ColumnMetadata"
 
 @Entity()
 export class User {
@@ -11,6 +12,12 @@ export class User {
 
     @Column()
     firstName: string
+
+    @Column()
+    login: string
+
+    @Column()
+    senha: string  
 
     @Column()
     lastName: string

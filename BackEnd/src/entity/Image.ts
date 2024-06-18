@@ -6,7 +6,7 @@ export class Image {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("blob")
+  @Column("bytea")
   data: Buffer;
     
   @OneToMany(() => User, users => users.images)

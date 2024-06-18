@@ -4,12 +4,14 @@ import ImageCreate from "../services/Images/ImageCreate";
 import ImageSelect from "../services/Images/ImageSelect";
 
 
-
 class ControllerImages {
 
     async createImage(req: Request, res: Response) {
         try {
+            console.log(req.body)
             const idUser = req.body.idUser;
+
+            console.log(req.file)
             const image = req.file;
             if (!image) {
                 return res.status(400).send({ message: "No file uploaded" });

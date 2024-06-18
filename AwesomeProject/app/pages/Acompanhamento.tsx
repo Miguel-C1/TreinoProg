@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Image, View, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
 
 export default function Acompanhamento() {
-  const [image, setImage] = useState('');
-  const [selectedImage, setSelectedImage] = useState(null);
-
+  const [image, setImage] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | undefined | null>(undefined);
+  const [fileType, setFileType] = useState<string | undefined>(undefined);
+  const [file, setFile] = useState< ImagePicker.ImagePickerSuccessResult | undefined >(undefined);
 
   useEffect(() => {
     (async () => {
@@ -18,38 +18,27 @@ export default function Acompanhamento() {
   }, []);
 
   const uploadImage = async () => {
-    if (!selectedImage) {
+    if (!image) {
       Alert.alert('No image selected');
       return;
     }
-
-    const fileUri = selectedImage;
-    const fileInfo = await FileSystem.getInfoAsync(fileUri);
-
-    if (!fileInfo.exists) {
-      Alert.alert('File not found');
+    console.log("Image: ")
+    console.log(image)
+    const formData = new FormData();
+    if (!fileName || !fileType || !file) {
       return;
     }
-
-    const fileData = await FileSystem.readAsStringAsync(fileUri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-
-    const formData = new FormData();
-    formData.append('image', {
-      uri: fileUri,
-      name: 'photo.jpg',
-      type: 'image/jpeg',
-      data: fileData,
-    } as any);
-
+    const teste = new File([file.assets[0].uri], fileName, { type: fileType });
+    formData.append('image', teste);
+  
+    formData.append('idUser', "1");
+    console.log("Form Data:")
+    console.log(formData)
+    const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substr(2, 10);
     try {
-      const response = await fetch('http://seu-backend.com/upload', {
+      const response = await fetch('http://localhost:3000/images/upload/', {
         method: 'POST',
         body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
       });
 
       if (!response.ok) {
@@ -58,7 +47,7 @@ export default function Acompanhamento() {
 
       Alert.alert('Image uploaded successfully');
     } catch (error: any) {
-      Alert.alert('Upload failed', error);
+      Alert.alert('Upload failed', error.message);
     }
   };
 
@@ -72,12 +61,20 @@ export default function Acompanhamento() {
 
     let imagem = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4, 3],
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      base64: false,
+      aspect: [4, 4],
+      quality: 1,
     });
 
     if (!imagem.canceled) {
-      // Aqui você pode lidar com a imagem capturada
+      console.log("Imagem FODA")
+      console.log(imagem)
+      setFile(imagem);
       setImage(imagem.assets[0].uri);
+      setFileName(imagem.assets[0].fileName);
+      setFileType(imagem.assets[0].mimeType);
+      console.log("Chegou aqui");
       uploadImage();
     } else {
       Alert.alert('Ação cancelada', 'A captura de imagem foi cancelada.');
@@ -89,13 +86,7 @@ export default function Acompanhamento() {
       return; // Nenhuma imagem selecionada para remover
     }
 
-    try {
-      await FileSystem.deleteAsync(image, { idempotent: true });
-      setImage(''); // Limpa o estado para refletir a remoção da imagem
-    } catch (error) {
-      console.error('Erro ao excluir imagem:', error);
-      Alert.alert('Erro', 'Houve um erro ao excluir a imagem.');
-    }
+    setImage(null); // Limpa o estado para refletir a remoção da imagem
   };
 
   return (
@@ -107,8 +98,7 @@ export default function Acompanhamento() {
           <Button title="Remover Imagem" onPress={removeImage} />
         </View>
       ) : (
-        <View style={styles.placeholder}>
-        </View>
+        <View style={styles.placeholder} />
       )}
     </View>
   );

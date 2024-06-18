@@ -7,6 +7,7 @@ import { Training } from "./entity/Training";
 import { Groups } from "./entity/Groups";
 import { Exercise } from "./entity/Exercises";
 import { Acompanhamento } from "./entity/Acompanhamento";
+import { Image } from "./entity/Image";
 
 dotenv.config();
 

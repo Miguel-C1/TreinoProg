@@ -6,7 +6,7 @@ export default function Acompanhamento() {
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | undefined | null>(undefined);
   const [fileType, setFileType] = useState<string | undefined>(undefined);
-  const [file, setFile] = useState< ImagePicker.ImagePickerSuccessResult | undefined >(undefined);
+  const [file, setFile] = useState<ImagePicker.ImagePickerSuccessResult | undefined>(undefined);
 
   useEffect(() => {
     (async () => {
@@ -30,7 +30,7 @@ export default function Acompanhamento() {
     }
     const teste = new File([file.assets[0].uri], fileName, { type: fileType });
     formData.append('image', teste);
-  
+
     formData.append('idUser', "1");
     console.log("Form Data:")
     console.log(formData)
@@ -49,6 +49,7 @@ export default function Acompanhamento() {
     } catch (error: any) {
       Alert.alert('Upload failed', error.message);
     }
+    removeImage();
   };
 
   const tirarFoto = async () => {
@@ -91,7 +92,7 @@ export default function Acompanhamento() {
 
   return (
     <View style={styles.container}>
-      <Button title="Tirar Foto" onPress={tirarFoto} />
+      <Button title="Tá Pago!!" onPress={tirarFoto} />
       {image ? (
         <View style={styles.imageContainer}>
           <Image source={{ uri: image }} style={styles.image} />

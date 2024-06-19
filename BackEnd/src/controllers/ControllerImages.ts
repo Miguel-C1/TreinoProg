@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import multer from 'multer';
 import ImageCreate from "../services/Images/ImageCreate";
 import ImageSelect from "../services/Images/ImageSelect";
+import ImageDelete from "../services/Images/ImageDelete";
 
 
 class ControllerImages {
@@ -38,6 +39,15 @@ class ControllerImages {
         try {
             const id = Number(req.params.id);
             const image = await ImageSelect.selectById(id);
+            res.status(200).json(image);
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+    async deleteImage(req: Request, res: Response) {
+        try {
+            const id = Number(req.params.id);
+            const image = await ImageDelete.delete(id);
             res.status(200).json(image);
         } catch (error: any) {
             res.status(400).json({ message: error.message });

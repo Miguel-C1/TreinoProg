@@ -20,7 +20,9 @@ class AcompanhamentoService {
 
         // Determine the current day of the week
         const currentDate = new Date();
-        const dayOfWeek = currentDate.toLocaleString('en-US', { weekday: 'long' });
+        const dayOfWeek = this.getDayOfWeekInPortuguese(currentDate);
+        console.log('dayOfWeek: ')
+        console.log(dayOfWeek)
 
         // Find the training for today
         const treinoDoDia = await trainingRepository.findOne({
@@ -67,6 +69,12 @@ class AcompanhamentoService {
         }
 
         return acompanhamento;
+    }
+    private getDayOfWeekInPortuguese(date: Date): string {
+        const daysOfWeek = [
+            'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+        ];
+        return daysOfWeek[date.getDay()];
     }
 }
 

@@ -7,6 +7,7 @@ interface ExercicioUpdateProps {
   route: {
     params: {
       id: number;
+      idUser: number;
     };
   };
   navigation: any;

@@ -16,26 +16,26 @@ interface Exercise {
 interface ExercicioProps {
   route: {
     params: {
-      id: number;
+      idUsuario: number;
     };
   };
   navigation: any;
+  idUsuario: number;
 }
 
-const Exercicio: React.FC<ExercicioProps> = ({ navigation, route }) => {
-  const [data, setData] = useState<Exercise[]>([]); // Defina o tipo de dados como Exercise[]
-
+const Exercicio: React.FC<ExercicioProps> = ({ navigation, route, idUsuario }) => {
+  const [data, setData] = useState<Exercise[]>([]); 
   useEffect(() => {
     fetchData();
-  }, [data]);
+  }, [idUsuario]);
 
   const handleReload = () => {
     fetchData();
   };
-
+  
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/exercise/user/${route.params.id}`, {
+      const response = await fetch(`http://localhost:3000/exercise/user/${route.params.idUsuario}`, {
         method: 'GET'
       });
       const json = await response.json();

@@ -19,25 +19,38 @@ type RootStackParamList = {
     'Alterar Exercicio': { id: number, idUsuario: number }; 
     'Cadastro de Treino': { idUsuario: number }; 
     'Alterar Treino': { id: number, idUsuario: number };
-    Template: { idUsuario: number };
 };
 
 const drawer = createDrawerNavigator<RootStackParamList>();
 
-const SideBar = ({user}: {user:any}) => {
+
+
+const SideBar = ({ user }: { user: number }) => {
+
     return (
         <drawer.Navigator>
-            <drawer.Screen name="Treino" component={Treino as React.ComponentType<any>} initialParams={{idUsuario: user}} key='treino' />
-            <drawer.Screen name="Home" component={Home as React.ComponentType<any>} initialParams={{ idUsuario: user }} key='home' />
-            <drawer.Screen name="Exercicios" component={Exercicio as React.ComponentType<any>} initialParams={{ idUsuario: user }} key='exercicios' />
-            <drawer.Screen name="Acompanhamento" component={Acompanhamento as React.ComponentType<any>} initialParams={{ idUsuario: user }} key='acompanhamento' />
-            <drawer.Screen name="Template" component={Template as React.ComponentType<any>} key='template' options={{ drawerItemStyle: { display: 'none' } }} />
+            <drawer.Screen name="Treino"
+                component={Treino as React.ComponentType<any>}
+                initialParams={{ idUsuario: user }}
+                key='treino' />
+            <drawer.Screen name="Home"
+                component={Home as React.ComponentType<any>}
+                initialParams={{ idUsuario: user }}
+                key='home' />
+            <drawer.Screen name="Exercicios"
+                component={Exercicio as React.ComponentType<any>}
+                initialParams={{ idUsuario: user }}
+                key='exercicios' />
+            <drawer.Screen name="Acompanhamento"
+                component={Acompanhamento as React.ComponentType<any>}
+                initialParams={{ idUsuario: user }}
+                key='acompanhamento' />
             <drawer.Screen name="Cadastro de Exercicio"
                 component={ExercicioCadastro as React.ComponentType<any>}
                 initialParams={{ idUsuario: user }}
                 key='exercicioCadastro'
                 options={{
-                    drawerItemStyle: { display: 'none' } // Isto oculta o item do menu no Drawer
+                    drawerItemStyle: { display: 'none' }
                 }}
                  />
             <drawer.Screen name="Cadastro de Treino"

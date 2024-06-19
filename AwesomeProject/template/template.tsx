@@ -6,7 +6,7 @@ import { View, StyleSheet } from 'react-native';
 interface TemplateProps {
     route: {
         params: {
-            id: number;
+            idUsuario: number;
         };
     };
     user: number;
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         
     },
     sidebar: {
-        flex: '100%',
+        flex: 2000,
         backgroundColor: 'gray',
     },
     content: {

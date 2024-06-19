@@ -5,7 +5,8 @@ import { Picker } from '@react-native-picker/picker';
 interface TreinoUpdateProps {
     route: {
         params: {
-          id: number;
+            id: number;
+            idUser: number;
         };
       };
     onUpdate: () => void;
@@ -26,7 +27,7 @@ const TreinoUpdate: React.FC<TreinoUpdateProps> = ({ route, onUpdate }) => {
 
     const fetchExercicios = async () => {
         try {
-            const response = await fetch('http://localhost:3000/exercise/');
+            const response = await fetch(`http://localhost:3000/exercise/user/${route.params.idUser}`);
             const json = await response.json();
             setListaExercicios(json);
         } catch (error) {

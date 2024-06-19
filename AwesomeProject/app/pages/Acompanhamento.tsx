@@ -43,7 +43,7 @@ const Acompanhamento: React.FC<AcompanhamentoProps> = ({ route, navigation }) =>
     const teste = new File([file.assets[0].uri], fileName, { type: fileType });
     formData.append('image', teste);
 
-    formData.append('idUser', "1");
+    formData.append('idUser', route.params.idUsuario.toString());
     console.log("Form Data:")
     console.log(formData)
     const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substr(2, 10);

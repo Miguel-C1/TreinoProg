@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import CreateAcompanhamento from "../services/Acompanhamento/AcompanhamentoCreate";
 import SelectAcompanhamento from "../services/Acompanhamento/AcompanhamentoSelect";
+import AcompanhamentoService from "../services/Acompanhamento/AcompanhamentoService";
 
 class ControllerAcompanhamento {
 
@@ -31,6 +32,15 @@ class ControllerAcompanhamento {
         }
     }
 
+    async registrarAcompanhamentoCompleto(req: Request, res: Response) {
+        const { userId, imageId } = req.body;
+        try {
+            const acompanhamento = await AcompanhamentoService.registrarAcompanhamentoCompleto(userId, imageId);
+            res.json(acompanhamento);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 }
 
 export default new ControllerAcompanhamento();

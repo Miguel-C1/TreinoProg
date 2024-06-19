@@ -5,7 +5,7 @@ export default function Home(gotoHome: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Treino</Text>
+      <Text style={styles.title}>Work In Progress</Text>
     </View>
   );
 }

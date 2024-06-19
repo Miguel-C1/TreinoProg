@@ -57,6 +57,28 @@ const Acompanhamento: React.FC<AcompanhamentoProps> = ({ route, navigation }) =>
         throw new Error('Failed to upload image');
       }
 
+
+      const data = await response.json();
+
+      console.log("Data:")
+      console.log(data);
+      const response2 = await fetch(`http://localhost:3000/acompanhamento/user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: route.params.idUsuario,
+          imageId: data.id,
+        }),
+      });
+
+      if (!response2.ok) {
+        await fetch(`http://localhost:3000/images/image/${data.id}`, {
+          method: 'DELETE',
+        });
+      }
+
       Alert.alert('Image uploaded successfully');
     } catch (error: any) {
       Alert.alert('Upload failed', error.message);

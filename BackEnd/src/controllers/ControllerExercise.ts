@@ -33,6 +33,15 @@ class ControllerExercise {
         }
     }
 
+    async selectExerciseByUserId(req: Request, res: Response) {
+        try {
+            const exercise = await SelectExercise.selectByUserId(Number(req.params.id));
+            res.status(200).json(exercise);
+        } catch (error: any) {
+            res.status(400).json({ message: error.message });
+        }
+    }
+
     async updateExercise(req: Request, res: Response) {
         try {
             const exercise = await UpdateExercise.update(Number(req.params.id), req.body);

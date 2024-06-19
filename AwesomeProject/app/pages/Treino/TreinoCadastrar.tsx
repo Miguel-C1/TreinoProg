@@ -3,11 +3,17 @@ import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity }
 import { Picker } from '@react-native-picker/picker';
 
 interface TreinoCadastroProps {
+    route: {
+        params: {
+            id: number;
+            idUser: number;
+        };
+    };
     onUpdate: () => void;
 }
 
 
-const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
+const TreinoCadastro: React.FC<TreinoCadastroProps> = ({ route, onUpdate }) => {
     const [nomeTreino, setNomeTreino] = useState('');
     const [data, setData] = useState<string>('');
     const [exercicios, setExercicios] = useState<number[]>([]);
@@ -44,7 +50,7 @@ const TreinoCadastro: React.FC<TreinoCadastroProps>  = ({onUpdate}) => {
             name: nomeTreino,
             exercises: exercicios,
             date: data,
-            user: 1,
+            user: route.params.idUser,
         };
         fetch('http://localhost:3000/training', {
             method: 'POST',

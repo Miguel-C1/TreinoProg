@@ -2,11 +2,22 @@ import SideBar from '@/components/navigation/SideBar';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const Template = () => {
+
+interface TemplateProps {
+    route: {
+        params: {
+            id: number;
+        };
+    };
+    user: number;
+    handleLogout: () => void;
+    
+}
+const Template: React.FC<TemplateProps>  = ({user, handleLogout}) => {
     return (
         <View style={styles.container}>
             <View style={styles.sidebar}>
-                <SideBar />
+                <SideBar  user={user}/>
             </View>
             <View style={styles.content}>
                 {/* Main content goes here */}
@@ -17,11 +28,12 @@ const Template = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
+        
     },
     sidebar: {
-        flex: 10,
+        flex: '100%',
         backgroundColor: 'gray',
     },
     content: {

@@ -2,7 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Button, Image, View, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function Acompanhamento() {
+interface AcompanhamentoProps {
+  route: {
+    params: {
+      id: number;
+      idUsuario: number;  
+    };
+  };
+  navigation: any;
+  onUpdate: () => void;
+}
+
+
+const Acompanhamento: React.FC<AcompanhamentoProps> = ({ route, navigation }) => {
   const [image, setImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | undefined | null>(undefined);
   const [fileType, setFileType] = useState<string | undefined>(undefined);
@@ -124,3 +136,5 @@ const styles = StyleSheet.create({
     height: 200,
   },
 });
+
+export default Acompanhamento;

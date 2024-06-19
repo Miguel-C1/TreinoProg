@@ -3,6 +3,7 @@ import { Training } from "./Training"
 import { Image } from "./Image"
 import { Acompanhamento } from "./Acompanhamento"
 import { ColumnMetadata } from "typeorm/metadata/ColumnMetadata"
+import { Exercise } from "./Exercises"
 
 @Entity()
 export class User {
@@ -13,10 +14,10 @@ export class User {
     @Column()
     firstName: string
 
-    @Column()
+    @Column({nullable: true})
     login: string
 
-    @Column()
+    @Column({nullable: true})
     senha: string  
 
     @Column()
@@ -32,6 +33,10 @@ export class User {
     @ManyToOne(() => Training, training => training.users)
     @JoinTable()
     training: Training[];
+
+    @ManyToOne(() => Exercise, exercise => exercise.users)
+    @JoinTable()
+    exercise: Exercise[];
 
     @ManyToOne(() => Acompanhamento, acompanhamento => acompanhamento.users)
     @JoinTable()

@@ -4,10 +4,16 @@ import { Picker } from '@react-native-picker/picker';
 
 
 interface ExercicioCadastroProps {
+  route: {
+    params: {
+      id: number;
+      idUser: number;
+    };
+  };
   onUpdate: () => void;
 }
 
-const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({onUpdate}) => {
+const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate}) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState(0);
   const [grupos, setGrupos] = useState([]);
@@ -26,6 +32,7 @@ const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({onUpdate}) => {
 
   const handleSubmit = () => {
     const body = {
+      id_user: route.params.idUser,
       name: nome,
       id_group: grupo
     };

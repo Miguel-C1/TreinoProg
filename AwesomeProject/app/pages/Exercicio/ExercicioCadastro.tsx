@@ -7,13 +7,14 @@ interface ExercicioCadastroProps {
   route: {
     params: {
       id: number;
-      idUser: number;
+      idUsuario: number;
     };
   };
   onUpdate: () => void;
+  navigation: any;
 }
 
-const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate}) => {
+const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate, navigation}) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState(0);
   const [grupos, setGrupos] = useState([]);
@@ -30,16 +31,18 @@ const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate}) =
   console.log(grupos)
   console.log(grupo)
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log("ID USUARIO:")
+    console.log(route.params.idUsuario)
     const body = {
-      id_user: route.params.idUser,
+      id_user: route.params.idUsuario,
       name: nome,
       id_group: grupo
     };
     if (!nome || !grupo) {
       return;
     }
-    fetch('http://localhost:3000/exercise', {
+    await fetch('http://localhost:3000/exercise', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +51,7 @@ const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate}) =
     })
       .then(response => response.json())
       .then(data => console.log(data))
-      .then(onUpdate)
+      .then(() => navigation.navigate('Exercicios').then(onUpdate))
       .catch(error => console.error(error));
   };
 

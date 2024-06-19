@@ -1,8 +1,7 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { Exercise } from "./Exercises"
-import { User } from "./User"
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Exercise } from "./Exercises";
+import { User } from "./User";
 import { Acompanhamento } from "./Acompanhamento";
-
 
 @Entity()
 export class Training {
@@ -16,11 +15,12 @@ export class Training {
     date: string;
 
     @ManyToMany(() => Exercise, exercise => exercise.trainings)
-    exercises: Exercise[]; 
-    @OneToMany(() => User, user => user.training)
-    users: User;  
+    @JoinTable()
+    exercises: Exercise[];
+
+    @ManyToOne(() => User, user => user.trainings)
+    user: User;
 
     @ManyToOne(() => Acompanhamento, acompanhamento => acompanhamento.training)
-    @JoinTable()
-    acompanhamento: Acompanhamento[];
+    acompanhamentos: Acompanhamento[];
 }

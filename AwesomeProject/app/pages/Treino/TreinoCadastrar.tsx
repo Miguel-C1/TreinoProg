@@ -5,8 +5,8 @@ import { Picker } from '@react-native-picker/picker';
 interface TreinoCadastroProps {
     route: {
         params: {
-            id: number;
-            idUser: number;
+            id: number; 
+            idUsuario: number;
         };
     };
     onUpdate: () => void;
@@ -45,14 +45,14 @@ const TreinoCadastro: React.FC<TreinoCadastroProps> = ({ route, onUpdate }) => {
         setExercicios(exercicios.filter(ex => ex !== exercicioId));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const treinoData = {
             name: nomeTreino,
             exercises: exercicios,
             date: data,
-            user: route.params.idUser,
+            user: route.params.idUsuario,
         };
-        fetch('http://localhost:3000/training', {
+        await fetch('http://localhost:3000/training', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

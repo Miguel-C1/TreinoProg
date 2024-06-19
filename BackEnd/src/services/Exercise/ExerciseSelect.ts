@@ -10,7 +10,7 @@ class SelectExercise {
     async select() {
         try {
             const exerciseRepository = AppDataSource.getRepository(Exercise);
-            const exercise = await exerciseRepository.find({relations: ['group']});
+            const exercise = await exerciseRepository.find({relations: ['group', 'user']});
             return exercise;
         } catch (error: any) {
             throw new Error(error.message);
@@ -46,7 +46,7 @@ class SelectExercise {
     async selectByUserId(id: number) {
         try {
             const exerciseRepository = AppDataSource.getRepository(Exercise);
-            const exercise = await exerciseRepository.find({ where: { id: id }, relations: ['group']});
+            const exercise = await exerciseRepository.find({ where: { user: {id: id} }, relations: ['group']});
             if (!exercise) {
                 throw new Error("Exercise not found");
             }

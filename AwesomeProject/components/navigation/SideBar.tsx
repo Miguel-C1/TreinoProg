@@ -23,8 +23,6 @@ type RootStackParamList = {
 
 const drawer = createDrawerNavigator<RootStackParamList>();
 
-
-
 const SideBar = ({ user }: { user: number }) => {
 
     return (

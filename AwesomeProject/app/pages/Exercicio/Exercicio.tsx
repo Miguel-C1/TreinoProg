@@ -52,6 +52,7 @@ const Exercicio: React.FC<ExercicioProps> = ({ navigation, route, idUsuario }) =
       });
       // Atualizar a lista de exercícios após exclusão
       setData(data.filter(item => item.id !== id));
+      handleReload(); // Chamando a função onUpdate
     } catch (error) {
       console.error(error);
     }

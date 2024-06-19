@@ -1,45 +1,39 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany, ManyToOne } from "typeorm"
-import { Training } from "./Training"
-import { Image } from "./Image"
-import { Acompanhamento } from "./Acompanhamento"
-import { ColumnMetadata } from "typeorm/metadata/ColumnMetadata"
-import { Exercise } from "./Exercises"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
+import { Training } from "./Training";
+import { Image } from "./Image";
+import { Acompanhamento } from "./Acompanhamento";
+import { Exercise } from "./Exercises";
 
 @Entity()
 export class User {
 
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    firstName: string
+    firstName: string;
 
-    @Column({nullable: true})
-    login: string
+    @Column({ nullable: true })
+    login: string;
 
-    @Column({nullable: true})
-    senha: string  
-
-    @Column()
-    lastName: string
+    @Column({ nullable: true })
+    senha: string;
 
     @Column()
-    age: number
+    lastName: string;
 
-    @ManyToOne(() => Image, images => images.users)
-    @JoinTable()
+    @Column()
+    age: number;
+
+    @ManyToOne(() => Image, image => image.users)
     images: Image[];
 
-    @ManyToOne(() => Training, training => training.users)
-    @JoinTable()
-    training: Training[];
+    @OneToMany(() => Training, training => training.user)
+    trainings: Training[];
 
-    @ManyToOne(() => Exercise, exercise => exercise.users)
-    @JoinTable()
-    exercise: Exercise[];
+    @OneToMany(() => Acompanhamento, acompanhamento => acompanhamento.user)
+    acompanhamentos: Acompanhamento[];
 
-    @ManyToOne(() => Acompanhamento, acompanhamento => acompanhamento.users)
-    @JoinTable()
-    acompanhamento: Acompanhamento[];
-
+    @OneToMany(() => Exercise, exercise => exercise.user)
+    exercises: Exercise[];
 }

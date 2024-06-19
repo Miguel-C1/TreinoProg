@@ -1,7 +1,6 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Training } from "./Training";
-
 
 @Entity()
 export class Acompanhamento {
@@ -10,12 +9,10 @@ export class Acompanhamento {
 
     @Column()
     data: Date;
-  
-    @OneToMany(() => User, user => user.acompanhamento)
-    users: User;
 
-    @OneToMany(() => Training, training => training.acompanhamento)
+    @ManyToOne(() => User, user => user.acompanhamentos)
+    user: User;
+
+    @ManyToOne(() => Training, training => training.acompanhamentos)
     training: Training;
-
-
 }

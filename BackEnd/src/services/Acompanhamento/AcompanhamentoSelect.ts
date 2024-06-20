@@ -23,7 +23,7 @@ class AcompanhamentoSelect {
     async selectByUserId(userId: number) {
         try {
             const acompanhamentoRepository = AppDataSource.getRepository(Acompanhamento);
-            const acompanhamento = await acompanhamentoRepository.find({where: {user: {id: userId}}});
+            const acompanhamento = await acompanhamentoRepository.find({where: {user: {id: userId}}, relations:["user", "training", "image"]});
             if (!acompanhamento) {
                 throw new Error("Acompanhamento not found");
             }

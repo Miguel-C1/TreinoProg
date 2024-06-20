@@ -9,7 +9,7 @@ const upload = multer({ storage: storage });
 // Rota para upload de imagens
 router.post('/upload', upload.single('image'), ControllerImages.createImage);
 router.get('/image/:id', ControllerImages.selectImageById);
-router.get('/user/:id', ControllerImages.selectImageByUserId);
+router.get('/user/:id', upload.single('image'),  ControllerImages.selectImageByUserId);
 router.delete('/image/:id', ControllerImages.deleteImage);
 
 

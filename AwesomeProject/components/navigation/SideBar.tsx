@@ -3,18 +3,20 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "@/app/pages/Home";
 import Treino from "@/app/pages/Treino/Treino";
 import Exercicio from "@/app/pages/Exercicio/Exercicio";
-import Acompanhamento from "@/app/pages/Acompanhamento";
+import Acompanhamento from "@/app/pages/Acompanhamento/Acompanhamento";
 import ExercicioCadastro from "@/app/pages/Exercicio/ExercicioCadastro";
 import ExercicioUpdate from "@/app/pages/Exercicio/ExercicioUpdate";
 import TreinoCadastro from "@/app/pages/Treino/TreinoCadastrar";
 import TreinoUpdate from "@/app/pages/Treino/TreinoUpdate";
 import Template from "@/template/template";
+import VisualizarAcompanhamento from "@/app/pages/Acompanhamento/VisualizarAcompanhamento";
 
 type RootStackParamList = {
     Home: { idUsuario: number };
     Treino: { idUsuario: number } ;
     Exercicios: { idUsuario: number };
     Acompanhamento: { idUsuario: number };
+    'Visualizar Acompanhamento': { idUsuario: number };
     'Cadastro de Exercicio': { idUsuario: number }; 
     'Alterar Exercicio': { id: number, idUsuario: number }; 
     'Cadastro de Treino': { idUsuario: number }; 
@@ -43,6 +45,12 @@ const SideBar = ({ user }: { user: number }) => {
                 component={Acompanhamento as React.ComponentType<any>}
                 initialParams={{ idUsuario: user }}
                 key='acompanhamento' />
+            <drawer.Screen name="Visualizar Acompanhamento"
+                component={VisualizarAcompanhamento as React.ComponentType<any>}
+                initialParams={{ idUsuario: user }}
+                key='visualizarAcompanhamento'
+                 />
+            
             <drawer.Screen name="Cadastro de Exercicio"
                 component={ExercicioCadastro as React.ComponentType<any>}
                 initialParams={{ idUsuario: user }}

@@ -3,9 +3,12 @@ import { Training } from "../../entity/Training";
 import { Acompanhamento } from "../../entity/Acompanhamento";
 import { User } from "../../entity/User";
 import { Image } from "../../entity/Image";
-import { Between } from "typeorm";
+import sharp from 'sharp';
 
 class AcompanhamentoService {
+
+
+
     async registrarAcompanhamentoCompleto(userId: number, imageId?: number) {
         const userRepository = AppDataSource.getRepository(User);
         const trainingRepository = AppDataSource.getRepository(Training);
@@ -42,7 +45,13 @@ class AcompanhamentoService {
         if (imageId) {
             const image = await imageRepository.findOneBy({ id: imageId });
             if (image) {
-                acompanhamento.image = image;
+                const imageBuffer = Buffer.from(acompanhamento.image.data);
+                const processedImageBuffer = await sharp(imageBuffer)
+                    .resize(200) // Ajuste o tamanho conforme necessário
+                    .toFormat('jpeg') // Especifique o formato desejado
+                    .toBuffer();
+                acompanhamento.image.data = processedImageBuffer;
+
             }
         }
         await acompanhamentoRepository.save(acompanhamento);

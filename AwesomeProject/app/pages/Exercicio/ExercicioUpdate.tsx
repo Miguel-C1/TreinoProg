@@ -14,6 +14,9 @@ interface ExercicioUpdateProps {
   onUpdate: () => void;
 }
 
+const API_URL = '192.168.244.30';
+
+
 const ExercicioUpdate: React.FC<ExercicioUpdateProps> = ({ route, navigation, onUpdate }) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState(0);
@@ -21,8 +24,8 @@ const ExercicioUpdate: React.FC<ExercicioUpdateProps> = ({ route, navigation, on
 
   useEffect(() => {
     const fetchGrupos = async () => {
-      const response = await fetch('http://localhost:3000/groups', { method: 'GET' });
-      const response2 = await fetch(`http://localhost:3000/exercise/${route.params.id}`, { method: 'GET' });
+      const response = await fetch(`${API_URL}/groups`, { method: 'GET' });
+      const response2 = await fetch(`${API_URL}/exercise/${route.params.id}`, { method: 'GET' });
       const json = await response.json();
       const json2 = await response2.json();
       json2[0].name && setNome(json2[0].name);
@@ -40,7 +43,7 @@ const ExercicioUpdate: React.FC<ExercicioUpdateProps> = ({ route, navigation, on
     if (!nome || !grupo) {
       return;
     }
-    fetch(`http://localhost:3000/exercise/${route.params.id}`, {
+    fetch(`${API_URL}/exercise/${route.params.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

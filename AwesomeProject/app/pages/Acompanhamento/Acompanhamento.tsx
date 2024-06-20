@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Button, Image, View, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
+
+const API_URL = '192.168.244.30';
+
 interface AcompanhamentoProps {
   route: {
     params: {
@@ -48,7 +51,7 @@ const Acompanhamento: React.FC<AcompanhamentoProps> = ({ route, navigation }) =>
     console.log(formData)
     const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substr(2, 10);
     try {
-      const response = await fetch('http://localhost:3000/images/upload/', {
+      const response = await fetch(`${API_URL}/images/upload/`, {
         method: 'POST',
         body: formData,
       });
@@ -62,7 +65,7 @@ const Acompanhamento: React.FC<AcompanhamentoProps> = ({ route, navigation }) =>
 
       console.log("Data:")
       console.log(data);
-      const response2 = await fetch(`http://localhost:3000/acompanhamento/user`, {
+      const response2 = await fetch(`${API_URL}/acompanhamento/user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +77,7 @@ const Acompanhamento: React.FC<AcompanhamentoProps> = ({ route, navigation }) =>
       });
 
       if (!response2.ok) {
-        await fetch(`http://localhost:3000/images/image/${data.id}`, {
+        await fetch(`${API_URL}/images/image/${data.id}`, {
           method: 'DELETE',
         });
       }

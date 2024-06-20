@@ -11,6 +11,7 @@ interface TreinoCadastroProps {
     };
     onUpdate: () => void;
 }
+const API_URL = '192.168.244.30';
 
 
 const TreinoCadastro: React.FC<TreinoCadastroProps> = ({ route, onUpdate }) => {
@@ -26,7 +27,7 @@ const TreinoCadastro: React.FC<TreinoCadastroProps> = ({ route, onUpdate }) => {
 
     const fetchExercicios = async () => {
         try {
-            const response = await fetch('http://localhost:3000/exercise/');
+            const response = await fetch(`${API_URL}/exercise/`);
             const json = await response.json();
             setListaExercicios(json);
         } catch (error) {
@@ -52,7 +53,7 @@ const TreinoCadastro: React.FC<TreinoCadastroProps> = ({ route, onUpdate }) => {
             date: data,
             user: route.params.idUsuario,
         };
-        await fetch('http://localhost:3000/training', {
+        await fetch(`${API_URL}/training`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

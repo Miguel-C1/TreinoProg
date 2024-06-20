@@ -12,6 +12,7 @@ interface Exercise {
     sub_group: string;
   };
 }
+const API_URL = '192.168.244.30';
 
 interface ExercicioProps {
   route: {
@@ -35,7 +36,7 @@ const Exercicio: React.FC<ExercicioProps> = ({ navigation, route, idUsuario }) =
   
   const fetchData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/exercise/user/${route.params.idUsuario}`, {
+      const response = await fetch(`${API_URL}/exercise/user/${route.params.idUsuario}`, {
         method: 'GET'
       });
       const json = await response.json();
@@ -47,7 +48,7 @@ const Exercicio: React.FC<ExercicioProps> = ({ navigation, route, idUsuario }) =
 
   const handleDelete = async (id: number) => {
     try {
-      await fetch(`http://localhost:3000/exercise/${id}`, {
+      await fetch(`${API_URL}/exercise/${id}`, {
         method: 'DELETE'
       });
       // Atualizar a lista de exercícios após exclusão

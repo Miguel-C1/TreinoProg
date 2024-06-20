@@ -10,6 +10,7 @@ import TreinoCadastro from "@/app/pages/Treino/TreinoCadastrar";
 import TreinoUpdate from "@/app/pages/Treino/TreinoUpdate";
 import Template from "@/template/template";
 import VisualizarAcompanhamento from "@/app/pages/Acompanhamento/VisualizarAcompanhamento";
+import VisualizarAcompanhamentoImagens from "@/app/pages/Acompanhamento/VisualizarAcompanhamentoImagens";
 
 type RootStackParamList = {
     Home: { idUsuario: number };
@@ -17,6 +18,7 @@ type RootStackParamList = {
     Exercicios: { idUsuario: number };
     Acompanhamento: { idUsuario: number };
     'Visualizar Acompanhamento': { idUsuario: number };
+    'Visualizar Acompanhamento Imagem': { idUsuario: number };
     'Cadastro de Exercicio': { idUsuario: number }; 
     'Alterar Exercicio': { id: number, idUsuario: number }; 
     'Cadastro de Treino': { idUsuario: number }; 
@@ -49,6 +51,11 @@ const SideBar = ({ user }: { user: number }) => {
                 component={VisualizarAcompanhamento as React.ComponentType<any>}
                 initialParams={{ idUsuario: user }}
                 key='visualizarAcompanhamento'
+            />
+            <drawer.Screen name="Visualizar Acompanhamento Imagem"
+                component={VisualizarAcompanhamentoImagens as React.ComponentType<any>}
+                initialParams={{ idUsuario: user }}
+                key='visualizarAcompanhamentoImagem'
                  />
             
             <drawer.Screen name="Cadastro de Exercicio"

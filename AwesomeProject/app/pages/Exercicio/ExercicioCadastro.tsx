@@ -14,6 +14,9 @@ interface ExercicioCadastroProps {
   navigation: any;
 }
 
+const API_URL = '192.168.244.30';
+
+
 const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate, navigation}) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState(0);
@@ -21,7 +24,7 @@ const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate, na
 
   useEffect(() => {
     const fetchGrupos = async () => {
-      const response = await fetch('http://localhost:3000/groups', { method: 'GET' });
+      const response = await fetch(`${API_URL}/groups`, { method: 'GET' });
       const json = await response.json();
       setGrupos(json);
     };
@@ -42,7 +45,7 @@ const ExercicioCadastro: React.FC<ExercicioCadastroProps> = ({route,onUpdate, na
     if (!nome || !grupo) {
       return;
     }
-    await fetch('http://localhost:3000/exercise', {
+    await fetch(`${API_URL}/exercise`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

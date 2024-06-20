@@ -12,6 +12,9 @@ interface TreinoUpdateProps {
     onUpdate: () => void;
 }
 
+const API_URL = '192.168.244.30';
+
+
 const TreinoUpdate: React.FC<TreinoUpdateProps> = ({ route, onUpdate }) => {
     const [nomeTreino, setNomeTreino] = useState('');
     const [data, setData] = useState<string>('');
@@ -27,7 +30,7 @@ const TreinoUpdate: React.FC<TreinoUpdateProps> = ({ route, onUpdate }) => {
 
     const fetchExercicios = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/exercise/user/${route.params.idUser}`);
+            const response = await fetch(`${API_URL}/exercise/user/${route.params.idUser}`);
             const json = await response.json();
             setListaExercicios(json);
         } catch (error) {
@@ -37,7 +40,7 @@ const TreinoUpdate: React.FC<TreinoUpdateProps> = ({ route, onUpdate }) => {
 
     const fetchTreinoData = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/training/${route.params.id}`);
+            const response = await fetch(`${API_URL}/training/${route.params.id}`);
             const json = await response.json();
             console.log(response)
             console.log(json);
@@ -67,7 +70,7 @@ const TreinoUpdate: React.FC<TreinoUpdateProps> = ({ route, onUpdate }) => {
             date: data,
             user: 1,
         };
-        fetch(`http://localhost:3000/training/${route.params.id}`, {
+        fetch(`${API_URL}/training/${route.params.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

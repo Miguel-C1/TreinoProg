@@ -17,6 +17,9 @@ interface Treino {
   }[];
 }
 
+const API_URL = '192.168.244.30';
+
+
 const Treino = ({ navigation }: { navigation: any }) => {
   const [data, setData] = useState<Treino[]>([]);
 
@@ -30,7 +33,7 @@ const Treino = ({ navigation }: { navigation: any }) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/training', {
+      const response = await fetch(`${API_URL}/training`, {
         method: 'GET'
       });
       const json = await response.json();
@@ -43,7 +46,7 @@ const Treino = ({ navigation }: { navigation: any }) => {
 
   const handleDelete = async (id: number) => {
     try {
-      await fetch(`http://localhost:3000/training/${id}`, {
+      await fetch(`${API_URL}/training/${id}`, {
         method: 'DELETE'
       });
       setData(data.filter(item => item.id !== id));

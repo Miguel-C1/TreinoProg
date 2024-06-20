@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
+const API_URL = '192.168.244.30';
+
+
 export default function RegisterScreen ({ navigation }: { navigation: any }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,7 +30,7 @@ export default function RegisterScreen ({ navigation }: { navigation: any }) {
             senha: senha,
             age: Number(age),
         };
-      const response = await fetch('http://localhost:3000/user/', {
+      const response = await fetch(`${API_URL}/user/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

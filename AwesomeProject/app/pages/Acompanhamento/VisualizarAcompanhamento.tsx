@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 
+
+const API_URL = '192.168.244.30';
+
+
 interface VisualizarAcompanhamentoProps {
   route: {
     params: {
@@ -18,7 +22,7 @@ const VisualizarAcompanhamento: React.FC<VisualizarAcompanhamentoProps> = ({ rou
   useEffect(() => {
     const fetchTaPagoCounts = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/acompanhamento/countTaPago/user/${route.params.idUsuario}`);
+        const response = await fetch(`${API_URL}/acompanhamento/countTaPago/user/${route.params.idUsuario}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

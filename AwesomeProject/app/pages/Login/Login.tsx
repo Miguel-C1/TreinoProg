@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
-    
+const API_URL = '192.168.244.30';
+
 
 const LoginScreen = ({ navigation, onLogin }: {navigation: any,  onLogin: (userData: object) => void }) => {
   const [username, setUsername] = useState('');
@@ -18,7 +19,7 @@ const LoginScreen = ({ navigation, onLogin }: {navigation: any,  onLogin: (userD
       return;
     }
     try {
-      const response = await fetch('http://localhost:3000/user/login', {
+      const response = await fetch(`${API_URL}/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

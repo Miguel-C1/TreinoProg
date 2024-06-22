@@ -10,16 +10,14 @@ class ControllerImages {
     async createImage(req: Request, res: Response) {
         try {
             console.log(req.body)
-            const idUser = req.body.idUser;
+            const { idUser, image} = req.body;
 
-            console.log(req.file)
-            const image = req.file;
             if (!image) {
                 return res.status(400).send({ message: "No file uploaded" });
             }
             const data = {
-                data: image.buffer,
-                idUser: idUser
+                imagem: image,
+                idUsuario: idUser
             }
             const imageCreate = await ImageCreate.create(data);
             if (!imageCreate) {

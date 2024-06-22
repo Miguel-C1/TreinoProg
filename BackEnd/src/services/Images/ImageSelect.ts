@@ -7,7 +7,7 @@ class ImageSelect {
     async selectById(id: number) {
         try {
             const imageRepository = AppDataSource.getRepository(Image);
-            const image = await imageRepository.findOneBy({ id: id });
+            const image = await imageRepository.find({relations: ['users']});
             if (!image) {
                 throw new Error("Image not found");
             }

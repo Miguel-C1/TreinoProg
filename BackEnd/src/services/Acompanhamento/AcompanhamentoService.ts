@@ -3,11 +3,9 @@ import { Training } from "../../entity/Training";
 import { Acompanhamento } from "../../entity/Acompanhamento";
 import { User } from "../../entity/User";
 import { Image } from "../../entity/Image";
-import sharp from 'sharp';
+
 
 class AcompanhamentoService {
-
-
 
     async registrarAcompanhamentoCompleto(userId: number, imageId?: number) {
         const userRepository = AppDataSource.getRepository(User);
@@ -31,7 +29,8 @@ class AcompanhamentoService {
         const treinoDoDia = await trainingRepository.findOne({
             where: { user: user, date: dayOfWeek }
         });
-
+        console.log("Treino Do Dia")
+        console.log(treinoDoDia)
         if (!treinoDoDia) {
             throw new Error("No training found for today");
         }
@@ -45,13 +44,7 @@ class AcompanhamentoService {
         if (imageId) {
             const image = await imageRepository.findOneBy({ id: imageId });
             if (image) {
-                const imageBuffer = Buffer.from(acompanhamento.image.data);
-                const processedImageBuffer = await sharp(imageBuffer)
-                    .resize(200) // Ajuste o tamanho conforme necessário
-                    .toFormat('jpeg') // Especifique o formato desejado
-                    .toBuffer();
-                acompanhamento.image.data = processedImageBuffer;
-
+                acompanhamento.image = image;
             }
         }
         await acompanhamentoRepository.save(acompanhamento);

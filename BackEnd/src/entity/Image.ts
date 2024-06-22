@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
 import { User } from "./User";
 
 @Entity()
@@ -6,11 +6,11 @@ export class Image {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("bytea")
-  data: Buffer;
+  @Column({nullable: true})
+  imagem: string;
     
-  @OneToMany(() => User, users => users.images)
-  users: User[];  
+  @ManyToOne(() => User, users => users.images)
+  users: User;  
 
 
 }

@@ -25,7 +25,7 @@ export class User {
     @Column()
     age: number;
 
-    @ManyToOne(() => Image, image => image.users)
+    @OneToMany(() => Image, image => image.users)
     images: Image[];
 
     @OneToMany(() => Training, training => training.user)

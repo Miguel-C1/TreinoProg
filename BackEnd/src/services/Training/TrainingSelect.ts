@@ -28,7 +28,7 @@ class TrainingSelect {
     async selectByUserId(id: number) {
         try {
             const trainingRepository = AppDataSource.getRepository(Training);
-            const training = await trainingRepository.find({ where: { id: id }, relations: ['exercises']});
+            const training = await trainingRepository.find({ where: { user:{ id: id} }, relations: ['exercises']});
             if (!training) {
                 throw new Error("Training not found");
             }

@@ -27,7 +27,7 @@ class AcompanhamentoService {
 
         // Find the training for today
         const treinoDoDia = await trainingRepository.findOne({
-            where: { user: user, date: dayOfWeek }
+            where: { user:{ id: userId}, date: dayOfWeek }
         });
         console.log("Treino Do Dia")
         console.log(treinoDoDia)
@@ -74,7 +74,7 @@ class AcompanhamentoService {
     }
     private getDayOfWeekInPortuguese(date: Date): string {
         const daysOfWeek = [
-            'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'
+            'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'
         ];
         return daysOfWeek[date.getDay()];
     }

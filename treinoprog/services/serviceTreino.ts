@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://192.168.15.22:3000';
+import API_URL from '../ip/ipurl'; 
 
 
 export const searchTreino = async (term: string) => {

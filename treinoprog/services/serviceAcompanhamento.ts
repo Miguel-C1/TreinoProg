@@ -33,6 +33,11 @@ export const searchAcompanhamentoByUser = async (userId: number) => {
     return response.data;
 }
 
+export const diasFaltados = async (userId: number) => {
+    const response = await axios.get(`${API_URL}/acompanhamento/faltas/${userId}`)
+    return response.data
+}
+
 export const createAcompanhamento = async (userId: number, imageId: number) => {
     try {
         const body = {

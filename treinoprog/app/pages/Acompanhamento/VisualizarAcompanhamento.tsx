@@ -1,57 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
-import { BarChart } from 'react-native-chart-kit';
-import  useAcompanhamento  from '../../../hooks/useAcompanhamento'
+import { View, Text, StyleSheet } from 'react-native';
+import useAcompanhamento from '../../../hooks/useAcompanhamento';
 
-const VisualizarAcompanhamento = ({ navigation, route, }: { navigation: any, route: any }) => {
-  const { searchAcompanhamentoByUserHandler, acompanhamentos } = useAcompanhamento();
-  const [data, setData] = useState<{ trueCount: number; falseCount: number }>({ trueCount: 0, falseCount: 0 });
-  const { width } = useWindowDimensions(); // Hook para obter as dimensões da janela
+const VisualizarAcompanhamento = ({ navigation, route }: { navigation: any, route: any }) => {
+  const { diasFaltadosT, diasFaltadosHandler, acompanhamentos } = useAcompanhamento();
+  const [semanas, setSemanas] = useState<any[]>([]); // Estado para armazenar os dados das semanas
+
   useEffect(() => {
-    const fetchTaPagoCounts = async () => {
-      searchAcompanhamentoByUserHandler();
+    const fetchAcompanhamentoData = async () => {
+      await diasFaltadosHandler();  // Atualiza diasFaltadosT
+      if (diasFaltadosT) {
+        const labels = Object.keys(diasFaltadosT);
+        console.log(labels)
+        console.log(diasFaltadosT)
+        // Transforma o objeto diasFaltadosT em um array de semanas com faltas e presenças
+        const semanasData = labels.map((dia) => ({
+          semana: dia,
+          faltas: diasFaltadosT[dia].faltas,
+          presencas: diasFaltadosT[dia].presentes,
+        }));
+
+        setSemanas(semanasData);
+      }
     };
 
-    fetchTaPagoCounts();
-  }, []);
-
-  const chartData = {
-    labels: ['Pago', 'Faltou'],
-    datasets: [
-      {
-        data: [data.trueCount, data.falseCount],
-      },
-    ],
-  };
+    fetchAcompanhamentoData();
+  }, [acompanhamentos]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Relatório de Acompanhamento</Text>
-      <BarChart
-        style={styles.chart}
-        data={chartData}
-        width={width - 32} // Ajusta a largura do gráfico com base na largura da tela
-        height={220}
-        yAxisLabel=""
-        yAxisSuffix=""
-        chartConfig={{
-          backgroundColor: '#e26a00',
-          backgroundGradientFrom: '#fb8c00',
-          backgroundGradientTo: '#ffa726',
-          decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: '6',
-            strokeWidth: '2',
-            stroke: '#ffa726',
-          },
-        }}
-        verticalLabelRotation={30}
-      />
+      <Text style={styles.title}>Relatório de Faltas e Presenças por Semana</Text>
+      <View style={styles.tableContainer}>
+        <View style={styles.tableHeader}>
+          <Text style={styles.headerText}>Semana</Text>
+          <Text style={styles.headerText}>Faltas</Text>
+          <Text style={styles.headerText}>Presenças</Text>
+        </View>
+        {semanas.map((semana, index) => (
+          <View key={index} style={styles.tableRow}>
+            <Text style={styles.rowText}>{semana.semana}</Text>
+            <Text style={styles.rowText}>{semana.faltas}</Text>
+            <Text style={styles.rowText}>{semana.presencas}</Text>
+          </View>
+        ))}
+      </View>
     </View>
   );
 };
@@ -67,9 +59,36 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
-  chart: {
-    marginVertical: 8,
-    borderRadius: 16,
+  tableContainer: {
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#f2f2f2',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  headerText: {
+    flex: 1,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  rowText: {
+    flex: 1,
+    textAlign: 'center',
   },
 });
 

@@ -5,7 +5,7 @@ import useAcompanhamento from '@/hooks/useAcompanhamento';
 
 const Acompanhamento = () => {
   const [image, setImage] = useState(null);
-  const { imagem, images, imageSetter,uploadImageHandler, createAcompanhamentoHandler } = useAcompanhamento();
+  const { imageSetter,uploadImageHandler } = useAcompanhamento();
 
   const handleImageTaken = (base64Image) => {
     setImage(base64Image);
@@ -15,8 +15,7 @@ const Acompanhamento = () => {
 
   const travanaPose = () => {
     uploadImageHandler(image)
-    
-
+    setImage(null)
   }
 
   return (
@@ -28,7 +27,7 @@ const Acompanhamento = () => {
           <Image source={{ uri: image }} style={styles.image} />
         </View>
           <TouchableOpacity style={styles.button} onPress={travanaPose}>
-            <Text style={styles.buttonText}>Ficou pra caralho</Text>
+            <Text style={styles.buttonText}>Ficou boa pra caralho!!!</Text>
           </TouchableOpacity></>
       )}
 

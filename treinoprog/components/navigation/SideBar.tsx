@@ -1,6 +1,5 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Home from '@/app/pages/Home';
 import Treino from '@/app/pages/Treino/Treino';
 import Exercicio from '@/app/pages/Exercicio/Exercicio';
 import Acompanhamento from '@/app/pages/Acompanhamento/Acompanhamento';
@@ -16,7 +15,6 @@ import { ExercicioProvider } from '../../context/ExercicioContext';
 import { UserProvider } from '../../context/UserContext';
 
 type RootStackParamList = {
-    Home: { idUsuario: number };
     Treino: { idUsuario: number };
     Exercicios: { idUsuario: number };
     Acompanhamento: { id: number };
@@ -39,7 +37,6 @@ const SideBar = ({ user }: { user: number }) => {
                     <AcompanhamentoProvider userId={String(user)}>
                         <Drawer.Navigator>
                             <Drawer.Screen name="Treino" component={Treino} key="treino" />
-                            <Drawer.Screen name="Home" component={Home} key="home" />
                             <Drawer.Screen name="Exercicios" component={Exercicio} key="exercicios" />
                             <Drawer.Screen name="Acompanhamento" component={Acompanhamento} key="acompanhamento" />
                             <Drawer.Screen name="Visualizar Acompanhamento" component={VisualizarAcompanhamento}  key="visualizaracompanhamento" />

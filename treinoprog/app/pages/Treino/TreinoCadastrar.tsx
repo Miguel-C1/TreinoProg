@@ -6,7 +6,7 @@ import useTreino from '@/hooks/userTreino';
 
 const TreinoCadastro = ({ navigation }: { navigation: any }) => {
     const { exercicios, searchExercicioByUserHandler } = useExercicio();
-    const { createTreinoHandler } = useTreino();
+    const { createTreinoHandler, cleanObj } = useTreino();
     const [nomeTreino, setNomeTreino] = useState('');
     const [data, setData] = useState<string>('');
     const [exerciciosEscolhidos, setExercicios] = useState<number[]>([]);
@@ -33,6 +33,7 @@ const TreinoCadastro = ({ navigation }: { navigation: any }) => {
     
     const handleSubmit = async () => {
         createTreinoHandler(nomeTreino, exerciciosEscolhidos, data);
+        navigation.navigate('Treino').then(await cleanObj());;
     };
 
     return (

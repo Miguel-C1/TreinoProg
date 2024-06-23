@@ -81,7 +81,7 @@ export const AcompanhamentoProvider: React.FC<AcompanhamentoProviderProps> = ({ 
   const searchAcompanhamentoByUserHandler = async () => {
     try {
       const result = await searchAcompanhamentoByUser(Number(userId));
-      setAcompanhamentos(result);
+      setAcompanhamentos(result); 
     } catch (error) {
       console.error('Erro ao buscar acompanhamento por usuário:', error);
     }

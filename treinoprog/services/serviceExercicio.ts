@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL = 'http://192.168.15.22:3000';
+const API_URL = 'http://26.114.212.0:3000';
 
 export const searchExercicioByUser = async (userId: string) => {
     const response = await axios.get(`${API_URL}/exercise/user/${userId}`)

@@ -21,16 +21,12 @@
     },
     "android": {
       "permissions": [
-        "INTERNET",
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.ACCESS_MEDIA_LOCATION"
+        "INTERNET"
       ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.treinoprog3"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -45,20 +41,6 @@
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
           "isAccessMediaLocationEnabled": true
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 33,
-            "targetSdkVersion": 33,
-            "minSdkVersion": 21,
-            "buildToolsVersion": "33.0.0",
-            "manifest": {
-              "usesCleartextTraffic": true
-            }
-          }
         }
       ]
     ],

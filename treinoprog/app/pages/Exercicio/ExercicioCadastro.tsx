@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import useExercicio from '../../../hooks/useExercicio';
+import useExercicio from '@/hooks/useExercicio';
 
 const ExercicioCadastro = ({ navigation }: { navigation: any; }) => {
   const [nome, setNome] = useState('');

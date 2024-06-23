@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
-const API_URL = 'http://192.168.15.22:3000';
+const API_URL = 'http://172.26.224.1:3000';
 
 
 const LoginScreen = ({ navigation, onLogin }: {navigation: any,  onLogin: (userData: object) => void }) => {

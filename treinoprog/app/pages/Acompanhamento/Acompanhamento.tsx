@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Button, Alert, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import CameraComponent from '../../../components/Camera';
-import useAcompanhamento from '../../../hooks/useAcompanhamento';
+import CameraComponent from '@/components/Camera';
+import useAcompanhamento from '@/hooks/useAcompanhamento';
 
 const Acompanhamento = () => {
   const [image, setImage] = useState(null);

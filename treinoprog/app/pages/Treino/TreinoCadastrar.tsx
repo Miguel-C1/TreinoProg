@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import useExercicio from '../../../hooks/useExercicio';
-import useTreino from '../../../hooks/userTreino';
+import useExercicio from '@/hooks/useExercicio';
+import useTreino from '@/hooks/userTreino';
 
 const TreinoCadastro = ({ navigation }: { navigation: any }) => {
     const { exercicios, searchExercicioByUserHandler } = useExercicio();

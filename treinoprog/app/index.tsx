@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import Template from '../template/template';
-import LoginNav from '../components/navigation/LoginNav';
+import { NavigationContainer } from '@react-navigation/native';
+import LoginScreen from '@/app/pages/Login/Login';
+import RegisterScreen from '@/app/pages/Login/Cadastro';
+import Template from '@/template/template';
+import LoginNav from '@/components/navigation/LoginNav';
 
 const App = () => {
   const [user, setUser] = useState<[{ id: number}]>([{id: 0}]);
@@ -23,7 +26,7 @@ const App = () => {
       console.log(user);
       return <Template user={user[0].id} handleLogout={handleLogout} route={{
         params: {
-          id: user[0].id
+          idUsuario: user[0].id
         }
       }} />;
     }

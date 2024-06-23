@@ -1,4 +1,4 @@
-import SideBar from '../components/navigation/SideBar';
+import SideBar from '@/components/navigation/SideBar';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 

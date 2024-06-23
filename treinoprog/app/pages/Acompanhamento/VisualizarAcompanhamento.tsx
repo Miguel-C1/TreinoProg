@@ -7,14 +7,13 @@ const VisualizarAcompanhamento = ({ navigation, route, }: { navigation: any, rou
   const { searchAcompanhamentoByUserHandler, acompanhamentos } = useAcompanhamento();
   const [data, setData] = useState<{ trueCount: number; falseCount: number }>({ trueCount: 0, falseCount: 0 });
   const { width } = useWindowDimensions(); // Hook para obter as dimensões da janela
-
   useEffect(() => {
     const fetchTaPagoCounts = async () => {
       searchAcompanhamentoByUserHandler();
     };
 
     fetchTaPagoCounts();
-  }, [route.params.idUsuario]);
+  }, []);
 
   const chartData = {
     labels: ['Pago', 'Faltou'],

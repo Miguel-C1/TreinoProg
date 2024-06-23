@@ -19,10 +19,10 @@ type RootStackParamList = {
     Home: { idUsuario: number };
     Treino: { idUsuario: number };
     Exercicios: { idUsuario: number };
-    Acompanhamento: { idUsuario: number };
+    Acompanhamento: { id: number };
     ImageListScreen: { idUsuario: number };
-    'Visualizar Acompanhamento': { idUsuario: number };
-    'Visualizar Acompanhamento Imagem': { idUsuario: number };
+    'Visualizar Acompanhamento': {idUsuario: number};
+    'Visualizar Acompanhamento Imagem': undefined;
     'Cadastro de Exercicio': { idUsuario: number };
     'Alterar Exercicio': { id: string, idUsuario: number };
     'Cadastro de Treino': { idUsuario: number };

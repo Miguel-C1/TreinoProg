@@ -7,11 +7,12 @@ import useExercicio from '@/hooks/useExercicio';
 const ExercicioCadastro = ({ navigation }: { navigation: any; }) => {
   const [nome, setNome] = useState('');
   const [grupo, setGrupo] = useState<number | undefined>(undefined);
-  const { exercicios, searchExercicioByUserHandler, createExercicioHandler } = useExercicio();
+  const { exercicios, searchExercicioByUserHandler, createExercicioHandler, searchGroupsHandler, groups } = useExercicio();
 
   useEffect(() => {
     searchExercicioByUserHandler();
-  }, []);
+    searchGroupsHandler();
+  }, [groups]);
 
   const handleSubmit = async () => {
     if (!nome || grupo === undefined) {
@@ -34,7 +35,7 @@ const ExercicioCadastro = ({ navigation }: { navigation: any; }) => {
         style={styles.input}
         onValueChange={(itemValue: number) => setGrupo(itemValue)}
       >
-        {exercicios.map((g: { id: number; name: string }) => (
+        {groups.map((g: { id: number; name: string }) => (
           <Picker.Item key={g.id} label={g.name} value={g.id} />
         ))}
       </Picker>

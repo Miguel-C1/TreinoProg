@@ -35,8 +35,14 @@ const LoginScreen = ({ navigation, onLogin }: {navigation: any,  onLogin: (userD
       }
 
       const data = await response.json();
-      Alert.alert('Sucesso', 'Login bem-sucedido!');
-      onLogin(data);  // Chame a função de callback para atualizar o estado do usuário
+      console.log(data);
+      if (data.length > 0) {
+        Alert.alert('Sucesso', 'Login bem-sucedido!');
+        onLogin(data);  // Chame a função de callback para atualizar o estado do usuário
+      } else {
+        Alert.alert('Erro', 'Usuário ou senha incorretos.');
+      }
+     
     } catch (error: any) {
       Alert.alert('Erro', error.message);
     }

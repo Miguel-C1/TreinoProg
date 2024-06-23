@@ -41,6 +41,17 @@ class ControllerAcompanhamento {
             res.status(500).json({ error: error.message });
         }
     }
+
+    async diasFaltados(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const faltasPorDia = await AcompanhamentoService.contarFaltasPorDia(Number(id));
+            console.log(faltasPorDia);
+        } catch (error: any) {
+            console.error(error);
+        }
+    
+    }
 }
 
 export default new ControllerAcompanhamento();

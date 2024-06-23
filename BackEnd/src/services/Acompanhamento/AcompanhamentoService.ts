@@ -4,8 +4,44 @@ import { Acompanhamento } from "../../entity/Acompanhamento";
 import { User } from "../../entity/User";
 import { Image } from "../../entity/Image";
 
+type DayOfWeek = 'Domingo' | 'Segunda' | 'Terça' | 'Quarta' | 'Quinta' | 'Sexta' | 'Sabado';
+
 
 class AcompanhamentoService {
+
+    async contarFaltasPorDia(userId: number) {
+        const acompanhamentoRepository = AppDataSource.getRepository(Acompanhamento);
+        const userRepository = AppDataSource.getRepository(User);
+
+        // Fetch the user and their acompanhamentos
+        const user = await userRepository.findOne({ where: { id: userId }, relations: ["acompanhamentos", "acompanhamentos.training"] });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        // Initialize counts
+        const faltasPorDia = {
+            Domingo: { presentes: 0, faltas: 0 },
+            Segunda: { presentes: 0, faltas: 0 },
+            Terça: { presentes: 0, faltas: 0 },
+            Quarta: { presentes: 0, faltas: 0 },
+            Quinta: { presentes: 0, faltas: 0 },
+            Sexta: { presentes: 0, faltas: 0 },
+            Sabado: { presentes: 0, faltas: 0 },
+        };
+
+        // Count presences and absences
+        user.acompanhamentos.forEach(acompanhamento => {
+            const dayOfWeek = this.getDayOfWeekInPortuguese(acompanhamento.data);
+            if (acompanhamento.taPago) {
+                faltasPorDia[dayOfWeek].presentes += 1;
+            } else {
+                faltasPorDia[dayOfWeek].faltas += 1;
+            }
+        });
+
+        return faltasPorDia;
+    }
 
     async registrarAcompanhamentoCompleto(userId: number, imageId?: number) {
         const userRepository = AppDataSource.getRepository(User);
@@ -72,8 +108,8 @@ class AcompanhamentoService {
 
         return acompanhamento;
     }
-    private getDayOfWeekInPortuguese(date: Date): string {
-        const daysOfWeek = [
+    private getDayOfWeekInPortuguese(date: Date): DayOfWeek {
+        const daysOfWeek: DayOfWeek[] = [
             'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'
         ];
         return daysOfWeek[date.getDay()];

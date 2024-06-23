@@ -46,7 +46,7 @@ class ControllerAcompanhamento {
         try {
             const { id } = req.params
             const faltasPorDia = await AcompanhamentoService.contarFaltasPorDia(Number(id));
-            console.log(faltasPorDia);
+            res.status(200).json(faltasPorDia)
         } catch (error: any) {
             console.error(error);
         }
